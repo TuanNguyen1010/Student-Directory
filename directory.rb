@@ -20,14 +20,14 @@ def input_student
   puts "To finish, press enter twice"
   #create empty array
   #gets first name
-  name = gets.chomp
+  name = STDIN.gets.chomp
   #while code is not emoty, repeat code
   while !name.empty? do
     #add name to the array as a hash
     @student << {name: name, cohort: :november}
     puts "Now we have #{@student.count} students"
     #get another name from input
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
   #return the student array
 end
@@ -59,7 +59,7 @@ end
 def process(selection)
   case selection
     when "1"
-      student = input_student
+      input_student
     when "2"
       show_student
     when "3"
@@ -75,7 +75,7 @@ end
 def interactive_menu
   loop do
   print_menu
-  process(gets.chomp)
+  process(STDIN.gets.chomp)
   end
 end
 def save_students
@@ -87,15 +87,27 @@ def save_students
   end
   file.close
 end
-def load_file
-  file = File.open("students.csv", "r")
+def load_file(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(",")
     @student << {name: name, cohort: cohort.to_sym}
   end
   file.close
 end
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exist?(filename)
+    load_file(filename)
+    puts "Loaded #{@student.count} from #{filename}"
+  else
+    puts "Sorry #{filename} doesn't exist"
+    exit
+  end
+end
 
 #nothing happens untill we call this method
 #nothing happens in the code till this point
+try_load_students
 interactive_menu
