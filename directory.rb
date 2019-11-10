@@ -48,6 +48,7 @@ def print_menu
   puts "1. Input the student"
   puts "2. Show the students"
   puts "3. Save the list to student.csv"
+  puts "4. Load list from student.csv"
   puts "9. Exit"
 end
 def show_student
@@ -63,6 +64,8 @@ def process(selection)
       show_student
     when "3"
       save_students
+    when "4"
+      load_file
     when "9"
       exit
     else
@@ -84,7 +87,14 @@ def save_students
   end
   file.close
 end
-
+def load_file
+  file = File.open("students.csv", "r")
+  file.read_name.each do |line|
+  name, cohort = line.chomp.split(",")
+    @student << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+end
 
 #nothing happens untill we call this method
 #nothing happens in the code till this point
