@@ -89,7 +89,7 @@ def save_students
 end
 def load_file
   file = File.open("students.csv", "r")
-  file.read_name.each do |line|
+  file.readlines.each do |line|
   name, cohort = line.chomp.split(",")
     @student << {name: name, cohort: cohort.to_sym}
   end
