@@ -44,9 +44,33 @@ end
 def print_footer(names)
   puts "Overall we have #{names.count} great students"
 end
+def interactive_menu
+  student =[]
+  loop do
+  #print the menu and ask the user what to do
+  puts "1. Input the student"
+  puts "2. Show the students"
+  puts "9. Exit"
+  #read the input and save to a variable
+  selection = gets.chomp
+  #do what the user has asked
+  case selection
+    when "1"
+      student = input_student
+    when "2"
+      print_header
+      print(student)
+      print_footer(student)
+    when "9"
+      exit
+    else
+      puts "I don't know what you meant, try again"
+    end
+  end
+end
+
+
+
 #nothing happens untill we call this method
-students = input_student
 #nothing happens in the code till this point
-print_header
-print(students)
-print_footer(students)
+interactive_menu
